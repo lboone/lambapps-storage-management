@@ -30,17 +30,25 @@ const OTPModal = ({ email, accountId }: Props) => {
   const [isOpen, setIsOpen] = useState(true);
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
+
+  console.log({ accountId, password });
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsLoading(true);
+    setErrorMessage("");
+
     try {
       const { sessionId } = await verifySecret(accountId, password);
-
-      if (sessionId) router.push(routeConfig.applicationRedirectRoute);
+      if (sessionId) {
+        router.push(routeConfig.applicationRedirectRoute);
+      } else {
+        setErrorMessage("Incorrect OTP. Please try again.");
+      }
     } catch (error) {
-      console.error("Failed to verify OTP", error);
+      setErrorMessage("Failed to verify OTP");
     } finally {
       setIsLoading(false);
     }
@@ -101,6 +109,7 @@ const OTPModal = ({ email, accountId }: Props) => {
                 Click to resend
               </Button>
             </div>
+            {errorMessage && <p className="error-message">*{errorMessage}</p>}
           </div>
         </AlertDialogFooter>
       </AlertDialogContent>
