@@ -14,9 +14,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { createAccount } from "@/lib/actions/user.actions";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import OTPModal from "./OTPModal";
+import LoadingSpinner from "./ui/loading-spinner";
 
 type FormType = "sign-up" | "sign-in";
 
@@ -114,15 +115,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
             disabled={isLoading}
           >
             {type === "sign-up" ? "Sign Up" : "Sign In"}
-            {isLoading && (
-              <Image
-                src="/assets/icons/loader.svg"
-                alt="loader"
-                width={24}
-                height={24}
-                className="ml-2 animate-spin"
-              />
-            )}
+            <LoadingSpinner isLoading={isLoading} />
           </Button>
           {errorMessage && <p className="error-message">*{errorMessage}</p>}
           <div className="body-2 flex justify-center">
@@ -140,7 +133,9 @@ const AuthForm = ({ type }: { type: FormType }) => {
           </div>
         </form>
       </Form>
-      {/* OTP Verification */}
+      {accountId && (
+        <OTPModal email={form.getValues("email")} accountId={accountId} />
+      )}
     </>
   );
 };
