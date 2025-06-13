@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import OTPModal from "@/components/auth/OTPModal";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,11 +14,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import LoadingSpinner from "@/components/ui/loading-spinner";
 import { createAccount } from "@/lib/actions/user.actions";
 import Link from "next/link";
 import { useState } from "react";
-import OTPModal from "./OTPModal";
-import LoadingSpinner from "./ui/loading-spinner";
 
 type FormType = "sign-up" | "sign-in";
 

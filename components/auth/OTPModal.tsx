@@ -10,17 +10,17 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
 
+import { Button } from "@/components/ui/button";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import LoadingSpinner from "@/components/ui/loading-spinner";
 import { sendEmailOTP, verifySecret } from "@/lib/actions/user.actions";
 import { routeConfig } from "@/lib/route/config";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Button } from "./ui/button";
-import LoadingSpinner from "./ui/loading-spinner";
 
 type Props = {
   email: string;
