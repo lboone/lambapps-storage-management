@@ -15,7 +15,10 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import { sendEmailOTP, verifySecret } from "@/lib/actions/user.actions";
+import { routeConfig } from "@/lib/route/config";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import LoadingSpinner from "./ui/loading-spinner";
 
@@ -27,15 +30,15 @@ const OTPModal = ({ email, accountId }: Props) => {
   const [isOpen, setIsOpen] = useState(true);
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  // TODO: DELETE THIS
-  if (!accountId) return null;
+  const router = useRouter();
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      // Call an API to verify the OTP
+      const { sessionId } = await verifySecret(accountId, password);
+
+      if (sessionId) router.push(routeConfig.applicationRedirectRoute);
     } catch (error) {
       console.error("Failed to verify OTP", error);
     } finally {
@@ -44,7 +47,7 @@ const OTPModal = ({ email, accountId }: Props) => {
   };
 
   const handleResendOTP = async () => {
-    // Call an API to re-send the OTP
+    await sendEmailOTP({ email });
   };
   return (
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
