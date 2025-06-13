@@ -137,7 +137,7 @@
   }
 
   .shad-sheet {
-    @apply pt-0 !important;
+    @apply bg-white pt-0 !important;
   }
   .shad-sheet button,
   .shad-dialog button {
