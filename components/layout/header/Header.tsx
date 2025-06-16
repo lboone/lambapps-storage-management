@@ -1,15 +1,19 @@
-import FileUploader from "@/components/layout/header/FileUploader";
+import FileUploader from "@/components/layout/header/fileuploader/FileUploader";
 import Search from "@/components/layout/header/Search";
 import { Button } from "@/components/ui/button";
 import { signOutUser } from "@/lib/actions/user.actions";
 import Image from "next/image";
 
-const Header = () => {
+type Props = {
+  userId: string;
+  accountId: string;
+};
+const Header = ({ userId, accountId }: Props) => {
   return (
     <header className="header">
       <Search />
       <div className="header-wrapper">
-        <FileUploader />
+        <FileUploader ownerId={userId} accountId={accountId} />
         <form
           action={async () => {
             "use server";

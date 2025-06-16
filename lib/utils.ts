@@ -9,6 +9,10 @@ export const parseStringify = (value: unknown) =>
 
 export const convertFileToUrl = (file: File) => URL.createObjectURL(file);
 
+export const handleError = (error: unknown, message: string) => {
+  console.error(error, message);
+  return parseStringify({ error: message });
+};
 export const convertFileSize = (sizeInBytes: number, digits?: number) => {
   if (sizeInBytes < 1024) {
     return sizeInBytes + " Bytes"; // Less than 1 KB, show in Bytes
@@ -112,7 +116,7 @@ export const formatDateTime = (isoString: string | null | undefined) => {
 
 export const getFileIcon = (
   extension: string | undefined,
-  type: FileType | string,
+  type: FileType | string
 ) => {
   switch (extension) {
     // Document

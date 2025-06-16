@@ -33,8 +33,6 @@ const OTPModal = ({ email, accountId }: Props) => {
   const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
 
-  console.log({ accountId, password });
-
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIsLoading(true);

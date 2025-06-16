@@ -3,10 +3,11 @@ import { avatarPlaceholderUrl } from "@/constants";
 import { createAdminClient, createSessionClient } from "@/lib/appwrite";
 import { appwritConfig } from "@/lib/appwrite/config";
 import { routeConfig } from "@/lib/route/config";
-import { parseStringify } from "@/lib/utils";
+import { handleError, parseStringify } from "@/lib/utils";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { ID, Query } from "node-appwrite";
+
 type User = {
   fullName: string;
   email: string;
@@ -20,10 +21,6 @@ const getUserByEmail = async (email: string) => {
     [Query.equal("email", [email])]
   );
   return result.total > 0 ? result.documents[0] : null;
-};
-
-const handleError = (error: unknown, message: string) => {
-  console.error(error, message);
 };
 
 export const sendEmailOTP = async ({ email }: { email: string }) => {
@@ -103,10 +100,8 @@ export const signOutUser = async () => {
   try {
     await account.deleteSession("current");
     (await cookies()).delete("appwrite-session");
-    console.log("Logged out successfully");
   } catch (error) {
-    handleError(error, "Failed to sign out user");
-    return parseStringify({ error: "Failed to sign out user" });
+    return handleError(error, "Failed to sign out user");
   } finally {
     redirect("/sign-in");
   }

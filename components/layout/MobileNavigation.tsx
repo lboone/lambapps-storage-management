@@ -1,4 +1,6 @@
 "use client";
+import FileUploader from "@/components/layout/header/fileuploader/FileUploader";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
   Sheet,
@@ -13,23 +15,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { Button } from "../ui/button";
-import FileUploader from "./header/FileUploader";
 
 type Props = {
   fullName: string;
   email: string;
   avatar: string;
-  ownerId: string;
-  accountIdfullName: string;
+  accountId: string;
+  $id: string;
 };
 
 const MobileNavigation = ({
-  ownerId,
-  accountIdfullName,
+  accountId,
+  fullName,
   email,
   avatar,
-  fullName,
+  $id: ownerId,
 }: Props) => {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -62,7 +62,7 @@ const MobileNavigation = ({
                 className="header-user-avatar"
               />
               <div className="sm:hidden lg:block">
-                <p className="subtitle-2 capitaliz">{fullName}</p>
+                <p className="subtitle-2 capitalize">{fullName}</p>
                 <p className="caption">{email}</p>
               </div>
             </div>
@@ -96,7 +96,7 @@ const MobileNavigation = ({
           </nav>
           <Separator className="my-5 bg-light-200/20" />
           <div className="flex flex-col justify-between gap-5 pb-5">
-            <FileUploader />
+            <FileUploader ownerId={ownerId} accountId={accountId} />
             <Button
               type="submit"
               className="mobile-sign-out-button"
