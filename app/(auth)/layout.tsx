@@ -39,7 +39,8 @@ const Layout = async ({ children }: { children: React.ReactNode }) => {
             alt="Logo"
             width={224}
             height={82}
-            className="h-auto w-[200px] lg:w-[250px]"
+            className="h-auto lg:w-[250px]"
+            priority
           />
         </div>
         {children}
